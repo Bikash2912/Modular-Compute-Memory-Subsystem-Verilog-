@@ -107,3 +107,33 @@ The design was developed and verified module-by-module, then integrated and vali
     Receives commands from SPI master
     Stores and returns data bytes
     Debug signals expose current address and data
+
+    Data Flow Summary
+
+
+## Memory Map :
+  | Address Range | Target          |
+  | ------------- | --------------- |
+  | `0x00 – 0xFF` | Internal RAM    |
+  | `> 0xFF`      | External Memory |
+
+## Data Flow Summary :
+
+### Internal Memory Path
+      CPU → Memory Controller → Internal RAM → Memory Controller → CPU
+
+### ALU Path
+      Internal RAM → ALU → Internal RAM
+                               ↓
+                          (optional)
+                      External SPI Memory
+
+### External Memory Path
+      CPU → Memory Controller → SPI Master → External Memory
+                                  ↓
+                                Memory Controller → CPU
+
+
+# FSM-Based Diagrams :
+<img width="1408" height="768" alt="Gemini_Generated_Image_avxbccavxbccavxb" src="https://github.com/user-attachments/assets/05a7361c-1b57-451e-a743-57a07cef592b" />
+<img width="1408" height="768" alt="Gemini_Generated_Image_qgofvqqgofvqqgof" src="https://github.com/user-attachments/assets/c329ef9b-0e45-4d51-8e37-d98145abad39" />
