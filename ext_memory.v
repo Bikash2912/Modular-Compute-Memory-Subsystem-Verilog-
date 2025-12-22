@@ -20,28 +20,20 @@ module external_memory_interface #(
     output reg [DATA_WIDTH-1:0]     current_data
 );
 
-    // --------------------------------------------------
     // External memory
-    // --------------------------------------------------
     reg [DATA_WIDTH-1:0] ext_mem [0:MEM_DEPTH-1];
 
-    // --------------------------------------------------
     // SPI slave wires
-    // --------------------------------------------------
     wire [7:0] spi_rx_data;
     wire       rx_ready;
 
     reg  [7:0] tx_buffer;
 
-    // --------------------------------------------------
     // Address register
-    // --------------------------------------------------
     reg [ADDR_WIDTH_EXT-1:0] addr_reg;
     reg                      addr_received;
 
-    // --------------------------------------------------
     // SPI Slave Instance
-    // --------------------------------------------------
     spi_slave u_spi_slave (
         .clk(clk),
         .reset(reset),
@@ -54,9 +46,6 @@ module external_memory_interface #(
         .rx_ready(rx_ready)
     );
 
-    // --------------------------------------------------
-    // Simple protocol FSM
-    // --------------------------------------------------
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             addr_reg      <= 0;
@@ -68,25 +57,22 @@ module external_memory_interface #(
             if (!CS) begin
                 if (rx_ready) begin
                     if (!addr_received) begin
-                        // First byte = address
                         addr_reg      <= spi_rx_data;
                         current_addr  <= spi_rx_data;
                         addr_received <= 1'b1;
 
-                        // Preload read data immediately
                         tx_buffer     <= ext_mem[spi_rx_data];
                     end else begin
-                        // Second byte = data (WRITE)
                         ext_mem[addr_reg] <= spi_rx_data;
                         current_data      <= spi_rx_data;
                         addr_received     <= 1'b0;
                     end
                 end
             end else begin
-                // CS high → reset transaction
                 addr_received <= 1'b0;
             end
         end
     end
 
 endmodule
+
