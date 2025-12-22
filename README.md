@@ -4,6 +4,9 @@
 ## architecture block diagram
 <img width="1408" height="768" alt="8trtjh8trtjh8trt" src="https://github.com/user-attachments/assets/761f1bd8-7e9d-4e8e-9308-900a1cc4a109" />
 
+## schematic 
+<img width="1555" height="730" alt="Screenshot 2025-12-19 004914" src="https://github.com/user-attachments/assets/e70d2362-780a-4647-8960-33f5a00946cc" />
+
 # Overview
 This project implements an FSM-controlled integrated processing and memory subsystem using Verilog HDL.
   The design combines internal dual-port memory, an ALU with flag handling, and an external SPI memory interface,along with stack pointer & all orchestrated by a central memory controller finite state machine.
