@@ -27,49 +27,36 @@ module top_integrated_system #(
     output wire busy,
     output wire done,
 
-    // Debug
     output wire [ADDR_WIDTH_EXT-1:0] current_addr_wire,
     output wire [DATA_WIDTH-1:0]     current_data_wire
 );
 
-    // =====================================================
     // Internal RAM signals
-    // =====================================================
     wire we_int, re_int;
     wire [ADDR_WIDTH_INT-1:0] addr_int;
     wire [DATA_WIDTH-1:0] din_int, dout_int;
 
-    // =====================================================
     // SPI (stubbed)
-    // =====================================================
-    wire [ADDR_WIDTH_EXT-1:0] spi_addr;   // FIX: must exist
+    wire [ADDR_WIDTH_EXT-1:0] spi_addr;   
     wire [DATA_WIDTH-1:0] spi_din, spi_dout;
     wire spi_we, spi_re;
     wire spi_busy, spi_done;
 
-    // =====================================================
     // ALU
-    // =====================================================
     wire alu_enable;
     wire [3:0] alu_opcode;
     wire [DATA_WIDTH-1:0] alu_in_a, alu_in_b;
     wire [DATA_WIDTH-1:0] alu_out;
     wire alu_done;
 
-    // =====================================================
     // Flags
-    // =====================================================
     wire CY, ACY, ZERO, SGN, PARITY;
     wire latched_cy, latched_acy, latched_zero, latched_sgn, latched_parity;
 
-    // =====================================================
     // Stack Pointer
-    // =====================================================
     wire [ADDR_WIDTH_EXT-1:0] sp_addr;
 
-    // =====================================================
     // Internal RAM
-    // =====================================================
     true_dual_port_ram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH_INT)
@@ -86,9 +73,7 @@ module top_integrated_system #(
         .collision()
     );
 
-    // =====================================================
     // ALU
-    // =====================================================
     alu #(.size(DATA_WIDTH)) alu_core (
         .dataInA(alu_in_a),
         .dataInB(alu_in_b),
@@ -103,9 +88,7 @@ module top_integrated_system #(
         .dataOut(alu_out)
     );
 
-    // =====================================================
     // Flag Register
-    // =====================================================
     flag_register flag_reg (
         .clk(clk),
         .reset(reset),
@@ -122,9 +105,7 @@ module top_integrated_system #(
         .parity(latched_parity)
     );
 
-    // =====================================================
     // Stack Pointer
-    // =====================================================
     stack_pointer #(
         .ADDR_WIDTH(ADDR_WIDTH_EXT),
         .STACK_BASE(20'h00000)
@@ -136,9 +117,7 @@ module top_integrated_system #(
         .addr_out(sp_addr)
     );
 
-    // =====================================================
     // MEMORY CONTROLLER
-    // =====================================================
     memory_controller mem_ctrl (
         .clk(clk),
         .reset(reset),
@@ -161,7 +140,7 @@ module top_integrated_system #(
 
         .spi_we(spi_we),
         .spi_re(spi_re),
-        .spi_addr(spi_addr),     // FIX: connected
+        .spi_addr(spi_addr),     
         .spi_din(spi_din),
         .spi_dout(spi_dout),
         .spi_busy(spi_busy),
@@ -183,9 +162,7 @@ module top_integrated_system #(
     );
         // wire [ADDR_WIDTH_EXT-1:0] spi_addr;
 
-    // =====================================================
-    // SPI STUB (TRANSACTION-LEVEL)
-    // =====================================================
+    // SPI STUB
     reg [DATA_WIDTH-1:0] ext_mem [0:255];
     reg spi_done_r;
     reg [DATA_WIDTH-1:0] spi_dout_r;
@@ -194,7 +171,7 @@ module top_integrated_system #(
     assign spi_dout = spi_dout_r;
     assign spi_busy = 1'b0;
 
-    assign current_addr_wire = spi_addr;      // FIX: debug
+    assign current_addr_wire = spi_addr;     
     assign current_data_wire = spi_dout_r;    // FIX: debug
     assign alu_done = alu_enable;
 
@@ -217,3 +194,4 @@ module top_integrated_system #(
     end
 
 endmodule
+
