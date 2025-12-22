@@ -1,10 +1,12 @@
-<h1 align="center">Modular Compute Memory Subsystem using Verilog</h1>
+<h1 align="left">Modular Compute Memory Subsystem using Verilog</h1>
   Dual Port Memory and ALU Subsystem with External SPI Interface
 
-# Overview
+## architecture block diagram
+<img width="1408" height="768" alt="8trtjh8trtjh8trt" src="https://github.com/user-attachments/assets/761f1bd8-7e9d-4e8e-9308-900a1cc4a109" />
 
-  This project implements an FSM-controlled integrated processing and memory subsystem using Verilog HDL.
-  The design combines internal dual-port memory, an ALU with flag handling, and an external SPI memory interface, all orchestrated by a central memory controller finite state machine.
+# Overview
+This project implements an FSM-controlled integrated processing and memory subsystem using Verilog HDL.
+  The design combines internal dual-port memory, an ALU with flag handling, and an external SPI memory interface,along with stack pointer & all orchestrated by a central memory controller finite state machine.
 
 ## The system supports:
 
@@ -14,7 +16,7 @@
   4. Optional ALU result push to external memory using a stack pointer
   5. Clean handshaking (busy, done) for CPU-style control
 
-The design was developed and verified module-by-module, then integrated and validated at the top level.
+The design was developed and verified module by module, then integrated and validated at the top level.
 
 ## Top-Level Functionality
 
@@ -137,3 +139,31 @@ The design was developed and verified module-by-module, then integrated and vali
 # FSM-Based Diagrams :
 <img width="1408" height="768" alt="Gemini_Generated_Image_avxbccavxbccavxb" src="https://github.com/user-attachments/assets/05a7361c-1b57-451e-a743-57a07cef592b" />
 <img width="1408" height="768" alt="Gemini_Generated_Image_qgofvqqgofvqqgof" src="https://github.com/user-attachments/assets/c329ef9b-0e45-4d51-8e37-d98145abad39" />
+
+
+## Verification was performed in incremental stages:
+
+### 1. Unit-Level Verification
+  - Dual-port RAM
+  - ALU
+  - Flag register
+  - Stack pointer
+  - SPI master and slave
+
+### 2. Controller-Level Verification
+  - Internal memory operations
+  - External memory operations
+  - ALU sequencing
+  - Handshake correctness
+
+### 3. Top-Level Integration Verification
+  - Full data path validation
+  - ALU → external memory push
+  - Busy/done behavior
+  - End-to-end correctness
+
+## aechitecture used for top level verification
+<img width="1408" height="768" alt="Image_i87f33i87f33i87f" src="https://github.com/user-attachments/assets/78e2f1ec-cd09-4dbe-82a2-802526ee8dc5" />
+
+- **For simulation efficiency and debug clarity, SPI behavior was optionally stubbed at the transaction level during top-level testing.**
+
