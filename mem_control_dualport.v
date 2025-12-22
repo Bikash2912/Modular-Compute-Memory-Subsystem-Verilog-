@@ -8,7 +8,7 @@ module memory_controller #(
     input  clk,
     input  reset,
 
-    // CPU / top-level interface
+    // top-level interface
     input  we,
     input  re,
     input  alu_start,
@@ -44,7 +44,7 @@ module memory_controller #(
     input      [DATA_WIDTH-1:0] alu_out,
     input      alu_done,
 
-    // Flags (not used internally)
+    // Flags
     input alu_cy,
     input alu_zero,
     input alu_sgn,
@@ -54,9 +54,6 @@ module memory_controller #(
     input [ADDR_WIDTH_EXT-1:0] sp_addr
 );
 
-    // =========================================================
-    // REQUEST LATCHES (STABLE FOR ENTIRE TRANSACTION)
-    // =========================================================
     reg req_we, req_re;
     reg req_alu;
     reg [ADDR_WIDTH_EXT-1:0] req_addr;
@@ -72,9 +69,6 @@ module memory_controller #(
     localparam ALU_FETCH_A_WAIT = 5'd14;
     localparam ALU_FETCH_B_WAIT = 5'd15;
 
-    // =========================================================
-    // FSM STATES
-    // =========================================================
     localparam [4:0]
         IDLE            = 5'd0,
 
@@ -97,9 +91,6 @@ module memory_controller #(
 
     reg [4:0] state;
 
-    // =========================================================
-    // FSM
-    // =========================================================
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             state <= IDLE;
@@ -128,7 +119,6 @@ module memory_controller #(
 
             case (state)
 
-            // =====================================================
             IDLE: begin
                 busy <= 0;
 
@@ -153,9 +143,7 @@ module memory_controller #(
                 end
             end
 
-            // =====================================================
             // INTERNAL RAM
-            // =====================================================
             INT_WRITE: begin
                 addr_int <= req_addr[ADDR_WIDTH_INT-1:0];
                 din_int  <= req_data;
@@ -179,10 +167,7 @@ module memory_controller #(
                 state    <= COMPLETE;
             end
 
-
-            // =====================================================
             // SPI
-            // =====================================================
             SPI_WRITE_REQ: begin
                 spi_addr <= req_addr;
                 spi_din  <= req_data;
@@ -204,9 +189,7 @@ module memory_controller #(
                 end
             end
 
-            // =====================================================
-            // ALU SEQUENCE (TIMING SAFE)
-            // =====================================================
+            // ALU SEQUENCE 
             ALU_FETCH_A_REQ: begin
                 addr_int <= 8'h00;
                 re_int   <= 1;
@@ -282,6 +265,7 @@ module memory_controller #(
     end
 
 endmodule
+
 
 
 ////DONE
