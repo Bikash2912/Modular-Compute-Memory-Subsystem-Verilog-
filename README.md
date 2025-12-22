@@ -1,34 +1,34 @@
 ## Modular-Compute-Memory-Subsystem-Verilog-
-Dual Port Memory and ALU Subsystem with External SPI Interface
+  Dual Port Memory and ALU Subsystem with External SPI Interface
 
 # Overview
 
-This project implements an FSM-controlled integrated processing and memory subsystem using Verilog HDL.
-The design combines internal dual-port memory, an ALU with flag handling, and an external SPI memory interface, all orchestrated by a central memory controller finite state machine.
+  This project implements an FSM-controlled integrated processing and memory subsystem using Verilog HDL.
+  The design combines internal dual-port memory, an ALU with flag handling, and an external SPI memory interface, all orchestrated by a central memory controller finite state machine.
 
 ## The system supports:
 
-1. Internal memory read/write operations
-2. External memory access via SPI
-3. ALU operations using memory operands
-4. Optional ALU result push to external memory using a stack pointer
-5. Clean handshaking (busy, done) for CPU-style control
+  1. Internal memory read/write operations
+  2. External memory access via SPI
+  3. ALU operations using memory operands
+  4. Optional ALU result push to external memory using a stack pointer
+  5. Clean handshaking (busy, done) for CPU-style control
 
 The design was developed and verified module-by-module, then integrated and validated at the top level.
 
 ## Top-Level Functionality
 
-At a high level, the system behaves as follows:
+  At a high level, the system behaves as follows:
 
-### 1. CPU / Host issues a request
+   ### 1. CPU / Host issues a request
 
-1. Internal memory access
-2. External memory access
-3. ALU operation (with optional external push)
+    1. Internal memory access
+    2. External memory access
+    3. ALU operation (with optional external push)
 
-### 2.Memory Controller FSM
+   ### 2.Memory Controller FSM
 
-1. Decodes the request
+    1. Decodes the request
 2. Selects internal or external path
 3. Sequences multi-cycle operations
 4. Manages ALU operand fetch, execution, and write-back
