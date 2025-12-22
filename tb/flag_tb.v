@@ -1,74 +1,4 @@
-// `timescale 1ns / 1ps
 `include"stack_pointer.v"
-// module flag_register_tb;
-
-//     reg clk, reset, update;
-//     reg cy_in, acy_in, zero_in, sgn_in, parity_in;
-//     wire cy, acy, zero, sgn, parity;
-
-//     // DUT
-//     flag_register dut (
-//         .clk(clk),
-//         .reset(reset),
-//         .update(update),
-//         .cy_in(cy_in),
-//         .acy_in(acy_in),
-//         .zero_in(zero_in),
-//         .sgn_in(sgn_in),
-//         .parity_in(parity_in),
-//         .cy(cy),
-//         .acy(acy),
-//         .zero(zero),
-//         .sgn(sgn),
-//         .parity(parity)
-//     );
-
-//     always #5 clk = ~clk;
-
-//     initial begin
-//         clk = 0;
-//         reset = 1;
-//         update = 0;
-//         {cy_in, acy_in, zero_in, sgn_in, parity_in} = 0;
-
-//         #20 reset = 0;
-
-//         // -------------------------------
-//         $display("\n[TEST 1] Reset behavior");
-//         #10;
-//         $display("Flags = %b%b%b%b%b (expected 00000)",
-//                  cy, acy, zero, sgn, parity);
-
-//         // -------------------------------
-//         $display("\n[TEST 2] Update flags");
-//         {cy_in, acy_in, zero_in, sgn_in, parity_in} = 5'b10110;
-//         update = 1;
-//         #10 update = 0;
-//         #10;
-//         $display("Flags = %b%b%b%b%b (expected 10110)",
-//                  cy, acy, zero, sgn, parity);
-
-//         // -------------------------------
-//         $display("\n[TEST 3] Hold without update");
-//         {cy_in, acy_in, zero_in, sgn_in, parity_in} = 5'b01001;
-//         #20;
-//         $display("Flags = %b%b%b%b%b (expected 10110)",
-//                  cy, acy, zero, sgn, parity);
-
-//         // -------------------------------
-//         $display("\n[TEST 4] Update again");
-//         update = 1;
-//         #10 update = 0;
-//         #10;
-//         $display("Flags = %b%b%b%b%b (expected 01001)",
-//                  cy, acy, zero, sgn, parity);
-
-//         $display("\nFLAG REGISTER TEST COMPLETED");
-//         #20 $finish;
-//     end
-
-// endmodule
-
 `timescale 1ns / 1ps
 
 module stack_pointer_tb;
@@ -126,3 +56,4 @@ module stack_pointer_tb;
     end
 
 endmodule
+
