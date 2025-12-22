@@ -6,16 +6,11 @@ module tb_top_integrated_system;
     localparam DATA_WIDTH     = 8;
     localparam ADDR_WIDTH_EXT = 20;
 
-    // ------------------------------------------------------------
-    // Clock / Reset
-    // ------------------------------------------------------------
     reg clk = 0;
     reg reset;
     always #5 clk = ~clk;
 
-    // ------------------------------------------------------------
     // CPU interface
-    // ------------------------------------------------------------
     reg we, re;
     reg alu_start;
     reg [3:0] alu_op;
@@ -26,9 +21,6 @@ module tb_top_integrated_system;
     wire [DATA_WIDTH-1:0] data_out;
     wire busy, done;
 
-    // ------------------------------------------------------------
-    // DUT
-    // ------------------------------------------------------------
     top_integrated_system dut (
         .clk(clk),
         .reset(reset),
@@ -46,17 +38,11 @@ module tb_top_integrated_system;
         .current_data_wire()
     );
 
-    // ------------------------------------------------------------
-    // VCD
-    // ------------------------------------------------------------
     initial begin
         $dumpfile("top_system.vcd");
         $dumpvars(0, tb_top_integrated_system);
     end
 
-    // ------------------------------------------------------------
-    // Helper
-    // ------------------------------------------------------------
     task wait_done;
         begin
             @(posedge clk);
@@ -65,9 +51,6 @@ module tb_top_integrated_system;
         end
     endtask
 
-    // ------------------------------------------------------------
-    // Tests
-    // ------------------------------------------------------------
     initial begin
         we = 0; re = 0;
         alu_start = 0;
@@ -79,9 +62,7 @@ module tb_top_integrated_system;
         reset = 1;
         #40 reset = 0;
 
-        // =========================
         // TEST A: Internal RAM
-        // =========================
         addr = 8'h10;
         data_in = 8'h55;
         we = 1; #10 we = 0;
@@ -93,9 +74,7 @@ module tb_top_integrated_system;
 
         $display("INT READ = %02h (expected 55)", data_out);
 
-        // =========================
         // TEST B: External memory (stub)
-        // =========================
         addr = 20'h00100;
         data_in = 8'hAA;
         we = 1; #10 we = 0;
@@ -107,9 +86,7 @@ module tb_top_integrated_system;
 
         $display("SPI READ = %02h (expected AA)", data_out);
 
-        // =========================
         // TEST C: ALU internal
-        // =========================
         dut.internal_ram.mem[8'h00] = 8'h05;
         dut.internal_ram.mem[8'h01] = 8'h0A;
 
@@ -121,9 +98,7 @@ module tb_top_integrated_system;
         $display("ALU RESULT = %02h (expected 0F)",
                  dut.internal_ram.mem[8'h02]);
 
-        // =========================
         // TEST D: ALU → External (stub)
-        // =========================
         dut.internal_ram.mem[8'h00] = 8'h03;
         dut.internal_ram.mem[8'h01] = 8'h04;
 
@@ -137,10 +112,8 @@ module tb_top_integrated_system;
         $display("\nALL TESTS COMPLETED");
         #50 $finish;
     end
-
-    // ------------------------------------------------------------
     // Safety timeout
-    // ------------------------------------------------------------
+
     initial begin
         #3_000_000;
         $display(">>> SIMULATION TIMEOUT");
@@ -148,3 +121,4 @@ module tb_top_integrated_system;
     end
 
 endmodule
+
