@@ -106,7 +106,7 @@ module tb_top_integrated_system;
         alu_start = 1; #10 alu_start = 0;
         wait_done();
 
-        $display("EXT DATA = 07 (expected 07)",
+        $display("EXT DATA = %02h (expected 07)",
                  dut.ext_mem[dut.sp_inst.addr_out[7:0]]);
 
         $display("\nALL TESTS COMPLETED");
@@ -121,4 +121,5 @@ module tb_top_integrated_system;
     end
 
 endmodule
+
 
