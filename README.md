@@ -110,8 +110,6 @@ The design was developed and verified module by module, then integrated and vali
     Stores and returns data bytes
     Debug signals expose current address and data
 
-    Data Flow Summary
-
 
 ## Memory Map :
   | Address Range | Target          |
