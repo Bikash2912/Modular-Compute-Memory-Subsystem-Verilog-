@@ -168,3 +168,8 @@ The design was developed and verified module by module, then integrated and vali
 
 - **For simulation efficiency and debug clarity, SPI behavior was optionally stubbed at the transaction level during top-level testing.**
 
+## Tools Used :
+  - Verilog HDL
+  - Vivado Simulator ,VS code editor,Icarus verilog,GTk wave
+  - FSM-driven RTL design methodology  
+  - Modular, bottom-up verification approach
